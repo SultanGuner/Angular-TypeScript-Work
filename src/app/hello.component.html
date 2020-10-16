@@ -1,0 +1,72 @@
+<div class="container">
+  <form #form="ngForm" (submit)="submitForm(form)" novalidate>
+    <div class="jumbotron">
+      <h3>İş Başvuru Formu</h3>
+    </div>
+    <div class="form-group" [class.has-error]="firstName.invalid && firstName.dirty">
+      <label class="control-label">Ad:</label>
+      <input #firstName="ngModel" type="text" required minlength="3" class="form-control" name="firstName"
+        [(ngModel)]="model.firstName" (ngModelChange)="UpperCaseName($event,'name')">
+    </div>
+    <div *ngIf="firstName.invalid && firstName.dirty" class="alert alert-danger">Ad zorunlu alan ve en az 3 karakter
+      olmak zorundadır.</div>
+    <div class="form-group" [class.has-error]="lastName.invalid && lastName.touched">
+      <label class="control-label">Soyad:</label>
+      <input #lastName="ngModel" class="form-control" type="text" required maxlength="5" name="lastName"
+        [(ngModel)]="model.lastName" (ngModelChange)="UpperCaseName($event,'surname')">
+      <div *ngIf="lastName.invalid && lastName.touched" class="alert alert-danger">Soyad zorunlu alan ve en fazla 5
+        karakter olmak zorundadır.</div>
+    </div>
+    <div class="form-group">
+      <label class="control-label">E-Mail:</label>
+      <input #email="ngModel" class="form-control" [pattern]="pattern" type="text" name="email"
+        [(ngModel)]="model.email">
+      <div *ngIf="email.invalid && email.touched" class="alert alert-danger">Geçerli bir E-mail giriniz.</div>
+    </div>
+    <label>Beklenen Maaş: </label>
+    <div class="form-group">
+      <input #sallery="ngModel" class="form-control" type="text" name="sallery" [(ngModel)]="model.sallery"
+        (keypress)="checkValue($event)">
+    </div>
+    <label>Çalışma Şekli: </label>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" name="is-full-time" name="isFullTime" [(ngModel)]="model.isFullTime"> Tam Zamanlı
+      </label>
+    </div>
+    <label>Ödeme Şekli: </label>
+    <div class="radio">
+      <label>
+        <input type="radio" name="paymentType" value="week" [(ngModel)]="model.PaymentType"> Haftalık
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="paymentType" name="month" [(ngModel)]="model.PaymentType"> Aylık
+      </label>
+    </div>
+    <div class="form-group" [class.has-error]="hasLanguageError && language.dirty">
+      <label class="control-label">Ana Dil</label>
+      <select #language="ngModel" class="form-control" [(ngModel)]="model.language" name="language"
+        (blur)="validateLanguage(language.value)" (change)="validateLanguage(language.value)">
+        <option value="default">Bir dil seçiniz..</option>
+        <option *ngFor="let lang of languages">{{lang}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Doğum Tarihi: </label>
+      <datepicker name="birthDate" [(ngModel)]="model.birthDate">
+        <option value="MM/dd/yyyy">[{{todayDate | date:'MM/dd/yyyy'}}]</option>
+      </datepicker>
+    </div>
+    <div class="form-group">
+      <label>Kendine kaç puan verirsin : </label>
+      <rating name="rate" [(ngModel)]="model.rate" [max]="5"></rating>
+    </div>
+    <button type="submit" class="btn btn-primary"
+      [disabled]="form.invalid == true || hasLanguageError == true">Kaydet</button>
+  </form>
+</div>
+<div>Pristine: {{form.pristine}} Valid:{{form.valid}}</div>
+<div>hasLanguageError:{{hasLanguageError}}</div>
+<div>language.dirty:{{language.dirty}}</div>

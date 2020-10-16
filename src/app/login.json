@@ -1,0 +1,14 @@
+[
+    {
+        "login": true,
+        "name": "taylor davis"
+    },
+    {
+        "login": false,
+        "name": "isabella scott"
+    },
+    {
+        "login": true,
+        "name": "chloe woods"
+    }
+]

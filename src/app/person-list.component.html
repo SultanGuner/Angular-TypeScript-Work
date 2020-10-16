@@ -1,0 +1,6 @@
+<h3>Tam Adı : {{strName | CapitalLetter}} {{strSurName | CapitalLetter}}</h3>
+Adınız: <input type="text" [(ngModel)]="strName" (keypress)="OnlyNumbers($event)">
+Soyadınız : <input type="text" [(ngModel)]="strSurName" (keypress)="OnlyNumbers($event)"
+    [ngClass]="{mouseDown:isMouseDown}" (mousedown)=" isMouseDown = true " (mauseup)=" isMouseDown = false "
+    (mouseleave)="isMouseDown = false">
+<input type="button" value="Gönder" (click)="WriteFullName()">
